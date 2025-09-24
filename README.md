@@ -232,3 +232,6 @@ print(predict_new(sample))
 ```
 # OUTPUT:
 <img width="1226" height="526" alt="image" src="https://github.com/user-attachments/assets/1a2c1460-0980-4ea0-bc8e-d8e590a9cc45" />
+
+# RESULT:
+ Thus,The Binary-Classification-with-Neural-Networks-on-the-Census was successfully developed and trained using PyTorch.
