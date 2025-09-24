@@ -60,19 +60,22 @@ import torch.nn.functional as F
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-
+```
+```
 # Reproducibility
 SEED = 42
 np.random.seed(SEED)
 torch.manual_seed(SEED)
-
+```
+```
 # ========================
 # 2. Load Data
 # ========================
 df = pd.read_csv("income (1).csv")   # <- make sure file is in same folder
 print("Dataset shape:", df.shape)
 print(df.head())
-
+```
+```
 # ========================
 # 3. Separate categorical, continuous, label
 # ========================
@@ -83,22 +86,26 @@ label_col = "income"
 
 print("Categorical:", categorical_cols)
 print("Continuous:", continuous_cols)
-
+```
+```
 # Encode labels
 label_enc = LabelEncoder()
 df[label_col] = label_enc.fit_transform(df[label_col])  # <=50K=0, >50K=1
-
+```
+```
 # Encode categoricals
 cat_encoders = {}
 for col in categorical_cols:
     enc = LabelEncoder()
     df[col] = enc.fit_transform(df[col])
     cat_encoders[col] = enc
-
+```
+```
 # Scale continuous
 scaler = StandardScaler()
 df[continuous_cols] = scaler.fit_transform(df[continuous_cols])
-
+```
+```
 # ========================
 # 4. Train-test split
 # ========================
@@ -111,7 +118,8 @@ y_train = torch.tensor(train_df[label_col].values, dtype=torch.long)
 X_test_cats = torch.tensor(test_df[categorical_cols].values, dtype=torch.int64)
 X_test_conts = torch.tensor(test_df[continuous_cols].values, dtype=torch.float)
 y_test = torch.tensor(test_df[label_col].values, dtype=torch.long)
-
+```
+```
 # ========================
 # 5. Model Definition
 # ========================
@@ -147,13 +155,15 @@ class TabularModel(nn.Module):
         x = self.fc2(x)
 
         return x
-
+```
+```
 # Embedding sizes
 cat_sizes = [int(df[col].nunique()) for col in categorical_cols]
 emb_szs = [(size, min(50, (size+1)//2)) for size in cat_sizes]
 
 model = TabularModel(emb_szs, n_cont=len(continuous_cols), out_sz=2)
-
+```
+```
 # ========================
 # 6. Training
 # ========================
@@ -173,7 +183,8 @@ for epoch in range(epochs):
         _, predicted = torch.max(y_pred, 1)
         acc = (predicted == y_train).sum().item() / len(y_train)
         print(f"Epoch {epoch+1}/{epochs}, Loss: {loss.item():.4f}, Train Acc: {acc:.4f}")
-
+```
+```
 # ========================
 # 7. Evaluation
 # ========================
@@ -185,7 +196,8 @@ with torch.no_grad():
     acc = (predicted == y_test).sum().item() / len(y_test)
 
 print(f"\nTest Loss: {loss.item():.4f}, Test Accuracy: {acc:.4f}")
-
+```
+```
 # ========================
 # 8. Bonus: Prediction Function
 # ========================
@@ -208,7 +220,8 @@ def predict_new(sample_dict):
         prob = F.softmax(pred, dim=1)
         result = label_enc.inverse_transform([torch.argmax(prob).item()])[0]
         return result, prob.numpy()
-
+```
+```
 # Example
 print("\nExample prediction:")
 sample = {
