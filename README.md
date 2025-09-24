@@ -4,7 +4,7 @@
 
 # REG NO: 212223100056
 
-# Requirements
+# Requirements:
 ```
 pandas
 numpy
@@ -12,6 +12,53 @@ torch
 scikit-learn
 jupyter
 ```
+---
+
+## Overview
+This project implements a **binary classification model** using **PyTorch** to predict whether an individual earns **more than $50,000 annually** based on census data.  
+The model uses **embeddings for categorical features** and **batch-normalized continuous features** in a tabular neural network.
+
+The project also includes:
+- Training and evaluation with **graphs**
+- Custom prediction function for new data
+
+---
+
+## Dataset
+- **File:** `income.csv`
+- **Number of entries:** 30,000
+- **Task:** Predict income category (`<=50K` or `>50K`)
+- **Features:** Both categorical (e.g., `workclass`, `education`) and continuous (e.g., `age`, `hours_per_week`)
+
+---
+
+## Features
+- **Categorical features:** One-hot encoded via embeddings  
+- **Continuous features:** Standardized and batch-normalized  
+- **Output:** Binary (0: `<=50K`, 1: `>50K`)  
+
+---
+
+## Model Architecture
+- **Tabular Neural Network**
+  - Embeddings for categorical variables
+  - Batch normalization for continuous variables
+  - Hidden layer: 50 neurons, ReLU activation
+  - Dropout: 0.4
+- **Optimizer:** Adam (learning rate = 0.001)
+- **Loss function:** CrossEntropyLoss
+- **Epochs:** 300
+
+---
+
+## Training & Evaluation
+- **Train/Test split:** 25,000 / 5,000
+- **Metrics:** Loss and Accuracy  
+- **Graph outputs included:**  
+  - Training vs Test Loss  
+  - Test Accuracy over epochs
+
+---
 # Steps:
 
 # 1. Data Preparation
