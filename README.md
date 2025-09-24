@@ -106,10 +106,9 @@ Reported loss and accuracy.
 
 print("Name: TAMILARASAN K S")
 print("Register No: 212223100056\n")
-
-# =============================
+```
+```
 # 1. Imports
-# =============================
 import pandas as pd
 import numpy as np
 import torch
@@ -119,10 +118,10 @@ import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import matplotlib.pyplot as plt
-
-# =============================
+```
+```
 # 2. Load Data
-# =============================
+
 df = pd.read_csv("income (1).csv")
 print("Dataset shape:", df.shape)
 print(df.head())
@@ -169,11 +168,11 @@ train_y = torch.tensor(y_train, dtype=torch.long)
 test_cats = torch.tensor(X_cats_test, dtype=torch.long)
 test_conts = torch.tensor(X_conts_test, dtype=torch.float)
 test_y = torch.tensor(y_test, dtype=torch.long)
+```
+```
 
-
-# =============================
 # 3. Define Model
-# =============================
+
 class TabularModel(nn.Module):
     def __init__(self, emb_szs, n_cont, out_sz, hidden_units=50, dropout=0.4):
         super().__init__()
@@ -204,17 +203,19 @@ cat_sizes = [int(df[col].nunique()) for col in categorical_cols]
 emb_szs = [(size, min(50, (size+1)//2)) for size in cat_sizes]
 
 model = TabularModel(emb_szs, len(continuous_cols), out_sz=2)
+```
+```
 
-# =============================
 # 4. Training Setup
-# =============================
+
 torch.manual_seed(42)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
+```
+```
 
-# =============================
 # 5. Training Loop
-# =============================
+
 epochs = 300
 train_losses, test_losses, test_accuracies = [], [], []
 
@@ -241,10 +242,11 @@ for epoch in range(epochs):
 
     if (epoch+1) % 50 == 0:
         print(f"Epoch {epoch+1}/{epochs} - Train Loss: {loss.item():.4f}, Test Loss: {test_loss:.4f}, Test Acc: {acc:.4f}")
+```
+```
 
-# =============================
 # 6. Graph Outputs
-# =============================
+
 plt.figure(figsize=(12,5))
 
 plt.subplot(1,2,1)
@@ -263,10 +265,11 @@ plt.title("Test Accuracy over Epochs")
 plt.legend()
 
 plt.show()
+```
+```
 
-# =============================
 # 7. Prediction Function
-# =============================
+
 def predict_new(sample_dict):
     sample_dict = {k.replace("-", "_"): v for k, v in sample_dict.items()}  # normalize keys
 
@@ -286,10 +289,11 @@ def predict_new(sample_dict):
         pred = np.argmax(probs, axis=1)[0]
 
     return ("<=50K" if pred == 0 else ">50K", probs)
+```
+```
 
-# =============================
 # 8. Example Prediction
-# =============================
+
 print("\nExample prediction:")
 sample = {
     "workclass": "Private",
