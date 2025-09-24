@@ -4,6 +4,12 @@
 
 # REG NO: 212223100056
 
+# Requirements
+pandas
+numpy
+torch
+scikit-learn
+jupyter
 
 # Steps:
 
