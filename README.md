@@ -108,7 +108,7 @@ print("Name: TAMILARASAN K S")
 print("Register No: 212223100056\n")
 ```
 ```
-# 1. Imports
+#1. Imports
 import pandas as pd
 import numpy as np
 import torch
